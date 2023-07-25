@@ -1,10 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:responsive_flutter_app/responsive/desktop_scaffold.dart';
 import 'package:responsive_flutter_app/responsive/mobile_scaffold.dart';
 import 'package:responsive_flutter_app/responsive/responsive_layout.dart';
 import 'package:responsive_flutter_app/responsive/tablet_scaffold.dart';
+import 'package:window_manager/window_manager.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    WindowManager.instance.setMinimumSize(const Size(320, 600));
+    // WindowManager.instance.setMaximumSize(const Size(1200, 600));
+  }
   runApp(const MyApp());
 }
 
